@@ -1,38 +1,92 @@
-.App {
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif; /* Clean and modern font */
+  background-color: #f9f9f9; /* Light gray background */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Styling for labels and inputs in a row */
+form div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 1rem;
+  color: #333; /* Dark gray for readability */
+  margin-right: 10px; /* Space between label and input */
+  width: 200px; /* Fixed width for labels to align inputs */
+  text-align: left; /* Align label text to the right */
+}
+
+input {
+  flex: 1; /* Input takes the remaining space */
+  height: 10px;
+  padding: 10px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #fff; /* White background */
+  color: #333;
+}
+
+/* Form container styling */
+form {
+  text-align: left;
+  max-width: 400px;
+  margin: 20px auto; /* Center the form with spacing */
+  background-color: #fff; /* White background for the form */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a clean look */
+}
+
+/* Heading styles */
+h1 {
+  color: #4a90e2; /* Soft blue */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  color: #333; /* Dark gray */
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Button styles */
+button {
+  background-color: #4a90e2; /* Soft blue */
   color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px 0;
+  width: 100%; /* Full-width buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: #357ab8; /* Darker blue on hover */
+  transform: scale(1.02);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button:active {
+  transform: scale(0.98);
+}
+
+/* Align form fields and buttons nicely */
+form button {
+  margin-top: 20px;
 }
