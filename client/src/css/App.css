@@ -62,31 +62,3 @@ h2 {
   margin-bottom: 20px;
   text-align: center;
 }
-
-/* Button styles */
-button {
-  background-color: #4a90e2; /* Soft blue */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin: 10px 0;
-  width: 100%; /* Full-width buttons */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background-color: #357ab8; /* Darker blue on hover */
-  transform: scale(1.02);
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-/* Align form fields and buttons nicely */
-form button {
-  margin-top: 20px;
-}
