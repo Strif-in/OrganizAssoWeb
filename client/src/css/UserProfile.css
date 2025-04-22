@@ -1,0 +1,80 @@
+/* General Styles */
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Header Section */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  /* Logo */
+  .logo img {
+    height: 50px;
+    width: auto;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    flex: 1;
+    margin: 0 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  /* Logout Button */
+  .logout-button button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  /* Main Content Section */
+  .main-content {
+    display: flex;
+    flex: 1; /* Take up the remaining space below the header */
+    padding: 20px;
+    gap: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    overflow: auto; /* Handle overflow if content exceeds the viewport */
+  }
+  
+  /* User Info Box */
+  .user-info {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Messages Box */
+  .messages-box {
+    flex: 2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }

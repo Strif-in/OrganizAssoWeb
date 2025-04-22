@@ -5,6 +5,7 @@ import WelcomePage from './pages/WelcomePage.jsx'
 import SignUp from './pages/SignUp.jsx'
 import SignIn from './pages/SignIn.jsx'
 import WaitingPage from './pages/WaitingPage.jsx'
+import UserProfile from './components/UserProfile.jsx';
 import ForumPage from './pages/ForumPage.jsx';
 // Import the WelcomePage component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/waiting" element={<WaitingPage />} />
+                <Route path="/userpage" element={<UserProfile/>} />
             </Routes>
         </Router>
     );
