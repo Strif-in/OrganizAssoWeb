@@ -1,4 +1,3 @@
-// filepath: c:\Users\melse\Downloads\Web-projet\app-react\src\components\SignIn.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 const SignIn = () => {

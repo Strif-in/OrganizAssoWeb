@@ -1,12 +1,11 @@
 import './css/App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import ListMessages from './components/ListMessages.jsx';
-import WelcomePage from './pages/WelcomePage.jsx';
-import SignIn from './pages/SignIn.jsx';
-import SignUp from './pages/SignUp.jsx';
-import Waiting from './pages/WaitingPage.jsx';
+import WelcomePage from './pages/WelcomePage.jsx'
+import SignUp from './pages/SignUp.jsx'
+import SignIn from './pages/SignIn.jsx'
+import WaitingPage from './pages/WaitingPage.jsx'
+import ForumPage from './pages/ForumPage.jsx';
 // Import the WelcomePage component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -53,28 +52,21 @@ function App() {
     }, []);
 
     const handleDeleteMessage = (messageToDelete) => {
-        
         setMessages(prevMessages =>
           prevMessages.filter(msg => msg.messageId !== messageToDelete.messageId)
         );
-      };
-      
+    };
 
     return (
-        <div>
-            <ListMessages messages={messages} userCur={userCur} onDelete={handleDeleteMessage}/>
-        </div>
-        
-        /*<Router>
+        <Router>
             <Routes>
                 <Route path="/" element={<WelcomePage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/waiting" element={<Waiting />} />
+                <Route path="/waiting" element={<WaitingPage />} />
             </Routes>
         </Router>
-        */
-   );
+    );
   }
   
   export default App;

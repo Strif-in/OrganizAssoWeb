@@ -1,11 +1,7 @@
 import MessageCard from './MessageCard';
 
 
-function ListMessages({ messages, userCur , onDelete}) {
-  const handleReply = (msg) => {
-    console.log("Reply to message:", msg.messageId);
-    // Add logic to set reply target in form
-  };
+function ListMessages({ messages, userCur , onDelete, onReply}) {
 
   return (
     <div>
@@ -14,7 +10,7 @@ function ListMessages({ messages, userCur , onDelete}) {
           key={msg.messageId}
           message={msg}
           userCur={userCur}
-          onReply={handleReply}
+          onReply={onReply}
           onDelete={onDelete}
         />
       ))}
