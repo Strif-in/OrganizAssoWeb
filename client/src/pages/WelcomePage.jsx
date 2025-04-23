@@ -1,18 +1,56 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
- 
- 
-const WelcomePage = () => {
-    const navigate = useNavigate();// Initialize navigation
- 
-    return (
-        <div>
-          <h1>Organiz-asso</h1>
-          <h2>Bienvenue</h2>
-          <button onClick={() => navigate('/signin')}>Connexion</button>
-          <button onClick={() => navigate('/signup')}>Créer un compte</button>
+import React, { useState } from 'react';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import WaitingPage from './WaitingPage';
+import '../css/WelcomePage.css';  // Optional for styling
+
+function WelcomePage({userCur, getConnected, users }) {
+  const [contentPage, setContentPage] = useState('login');
+
+  const handleConnection= (user) => {
+    getConnected(user)
+    if(user.userStatus == 'pending'){
+      setContentPage('waiting');
+    }
+  }
+  
+  return (
+    <div className="welcome-wrapper">
+      <div className="left-panel">
+        {contentPage === 'login' && (
+          <>
+            <LoginForm
+              ChangeToSignUp = {() => setContentPage('register')}
+              getConnected={handleConnection} 
+              users={users}
+            />
+          </>
+        )}
+
+        {contentPage === 'register' && (
+          <>
+            <RegisterForm 
+              ChangeToLogin={() => setContentPage('login')}
+              onRegisterSuccess={handleConnection}
+              users={users}
+            />
+          </>
+        )}
+
+        {contentPage === 'waiting' && (
+          <WaitingPage userCur = {userCur} checkUser={() => setContentPage('login')} />
+        )}
+      </div>
+      
+      <div className="right-panel">
+        <div className="logo-section">
+          <img src='/logo.png' alt="Logo" />
+          <h2>Organiz-Asso</h2>
         </div>
-      );
- };
- 
- export default WelcomePage;
+        <img className="building-img" src="/sorbonne_image.jpg" alt="Buildings" />
+      </div>
+    </div>
+  );
+}
+
+export default WelcomePage;
