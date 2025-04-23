@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/UserProfile.css';
-import ListMessages from './ListMessages.jsx'; // Assuming Message is in the same directory
+import ListMessages from '../components/ListMessages.jsx'; // Assuming Message is in the same directory
 
 function UserProfile({messages,userCur,onDelete}) {
   const navigate = useNavigate();

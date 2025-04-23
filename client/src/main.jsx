@@ -3,9 +3,6 @@ import React, { useState, useEffect } from 'react';
 import WelcomePage from './pages/WelcomePage';
 import UserPage from './pages/UserPage';
 import axios from 'axios';
-import UserProfile from './components/UserProfile.jsx';
-// Import the WelcomePage component
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const m = [
     {
@@ -49,6 +46,7 @@ const m = [
       forumId: 'admin'
     }
 ];  
+
 const u = [
     {
       userId: 'u1',
@@ -130,6 +128,7 @@ function App() {
     };
 
     return (
+      <>
         <div className="App">
             {!isConnected ? (
                 <WelcomePage
@@ -143,10 +142,12 @@ function App() {
                 users={users}
                 messages={messages}
                 logout={handleLogout}
+                onDelete={handleDeleteMessage}
                 setMessages={setMessages}
                 />
             )}
         </div>
+      </>
     );
   }
   
