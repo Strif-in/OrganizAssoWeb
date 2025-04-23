@@ -14,7 +14,9 @@ function WaitingPage({userCur, checkUser}) {
       <div className="waiting-page">
         <h2>En attente de validation</h2>
         <p>Votre compte {userCur.username} est en cours de validation par un administrateur.</p>
-        <button onClick={handleReload}>🔄 Back to Login</button>
+        <div className="button-group">
+          <button onClick={handleReload}>Back to Login</button>
+        </div>
       </div>
     </>
   );

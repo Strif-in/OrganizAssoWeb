@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../css/RegisterForm.css';
 
 function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
   const [nom, setNom] = useState('');
@@ -47,7 +46,7 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
     <>
       <h1>Sign Up Organiz-Asso</h1>
       <div className="underline"></div>
-      <form className="register-form" onSubmit={handleSubmit}>
+      <form className="welcome-form" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Nom"
@@ -91,8 +90,11 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
           required
         />
         {error && <p className="error">{error}</p>}
-        <button type="submit">SignUp</button>
-        <button onClick={ChangeToLogin}>Login</button>
+        
+        <div className="button-group">
+          <button type="submit">SignUp</button>
+          <button onClick={ChangeToLogin}>Login</button>
+        </div>
       </form>
     </>
   );

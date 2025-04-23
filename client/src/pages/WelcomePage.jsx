@@ -19,23 +19,19 @@ function WelcomePage({userCur, getConnected, users }) {
       <div className="welcome-wrapper">
         <div className="left-panel">
           {contentPage === 'login' && (
-            <>
-              <LoginForm
-                ChangeToSignUp = {() => setContentPage('register')}
-                getConnected={handleConnection} 
-                users={users}
-              />
-            </>
+            <LoginForm
+              ChangeToSignUp = {() => setContentPage('register')}
+              getConnected={handleConnection} 
+              users={users}
+            />
           )}
 
           {contentPage === 'register' && (
-            <>
-              <RegisterForm 
-                ChangeToLogin={() => setContentPage('login')}
-                onRegisterSuccess={handleConnection}
-                users={users}
-              />
-            </>
+            <RegisterForm 
+              ChangeToLogin={() => setContentPage('login')}
+              onRegisterSuccess={handleConnection}
+              users={users}
+            />
           )}
 
           {contentPage === 'waiting' && (
@@ -45,8 +41,8 @@ function WelcomePage({userCur, getConnected, users }) {
         
         <div className="right-panel">
           <div className="logo-section">
-            <img src='/logo.png' alt="Logo" />
-            <h2>Organiz-Asso</h2>
+            <img src='/logo_sorbonne.png' alt="Logo" />
+            <p>Organiz-Asso</p>
           </div>
           <img className="building-img" src="/sorbonne_image.jpg" alt="Buildings" />
         </div>
