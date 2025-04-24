@@ -1,4 +1,3 @@
-import './css/App.css';
 import React, { useState, useEffect } from 'react';
 import WelcomePage from './pages/WelcomePage';
 import UserPage from './pages/UserPage';

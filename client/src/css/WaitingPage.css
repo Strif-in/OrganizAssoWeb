@@ -1,13 +1,11 @@
 .waiting-page {
-  padding: 2rem;
-  gap: 2rem;
-  text-align: center;
-  max-width: 500px;
-  margin: 5rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .waiting-page h2 {
-  color: #ff9900;
+  color: #000000;
   margin-bottom: 1rem;
 }
 

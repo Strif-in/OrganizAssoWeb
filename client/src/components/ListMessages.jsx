@@ -1,7 +1,8 @@
 import MessageCard from './MessageCard';
 
 
-function ListMessages({ messages, userCur , onDelete, onReply}) {
+function ListMessages({users, messages, userCur , onDelete, onReply, showReply}) {
+  const getMessageById = (id) => messages.find(msg => msg.messageId === id);
 
   return (
     <>
@@ -9,10 +10,13 @@ function ListMessages({ messages, userCur , onDelete, onReply}) {
         {messages.map(msg => (
           <MessageCard
             key={msg.messageId}
+            users={users}
             message={msg}
             userCur={userCur}
-            onReply={onReply}
             onDelete={onDelete}
+            onReply={() => onReply(msg)}
+            showReply={showReply}
+            getMessageById={getMessageById}
           />
         ))}
       </div>

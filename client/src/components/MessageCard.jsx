@@ -2,25 +2,39 @@ import '../css/MessageCard.css'
 import React from 'react';
 
 
-function MessageCard({ message, userCur, onReply, onDelete }) {
+function MessageCard({ users, message, userCur, onReply, onDelete , getMessageById, showReply=true}) {
     const isAdmin = userCur?.userStatus === 'admin';
     const isAuthor = message.userId === userCur?.userId;
+    const author = users.find(
+        user => user.userId === message.userId
+    )
+
+    const repliedMessage = message.replyMesId ? getMessageById(message.replyMesId) : null;
 
     return (
         <>
             <div className="message-card">
+                
+                {repliedMessage && (
+                    <div className="quoted-message">
+                    <strong>{repliedMessage.userId}:</strong>
+                    <p>"{repliedMessage.contenu.slice(0, 50)}..."</p>
+                    </div>
+                )}
+                
                 <div className="message-content">
                     <p>{message.contenu}</p>
                 </div>
 
                 <div className="message-buttons">
-                    <button
+                    {showReply && (<button
                     className="icon-button reply"
                     title="Répondre"
-                    onClick={() => onReply(message)}
+                    onClick={onReply}
                     >
                     ↩
                     </button>
+                    )}
 
                     {(isAdmin || isAuthor) && (
                     <button
@@ -34,9 +48,10 @@ function MessageCard({ message, userCur, onReply, onDelete }) {
                 </div>
 
                 <div className="message-footer">
-                    <span className="author">{message.user?.username || 'Unknown'}</span>
+                    <span className="author">{author?.username || 'Unknown'}</span>
                     <span className="date">{new Date(message.date).toLocaleString()}</span>
                 </div>
+                
             </div>
         </>
     );

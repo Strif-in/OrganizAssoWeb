@@ -21,7 +21,7 @@ function LoginForm({ChangeToSignUp, getConnected, users }) {
 
     return (
         <>
-            <h1>Login Organiz-Asso</h1>
+            <h1>Login your Account</h1>
             <div className="underline"></div>
             <form className="welcome-form" onSubmit={handleSubmit}>
             <input

@@ -1,0 +1,46 @@
+.user-page {
+	display: flex;
+	flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+header {
+	display: flex;
+	background-color: #d9eaff;
+  flex-direction: row;
+	justify-content: center;
+	gap: 5rem;
+	padding: 1rem;
+}
+
+header button {
+  background-color: #d4d4d4;
+  color: rgb(0, 0, 0);
+  border: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+header button:hover {
+  background-color: #0078f8;
+}
+
+.navbar {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	background-color: #ccd3d6;  
+	padding: 1rem;
+	width: fit-content;
+	border-radius: 15px;
+}
+
+.page-content {
+	display: flex;
+	background-color: #ff0000;
+}

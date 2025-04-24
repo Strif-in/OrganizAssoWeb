@@ -40,11 +40,8 @@ function WelcomePage({userCur, getConnected, users }) {
         </div>
         
         <div className="right-panel">
-          <div className="logo-section">
-            <img src='/logo_sorbonne.png' alt="Logo" />
-            <p>Organiz-Asso</p>
-          </div>
-          <img className="building-img" src="/sorbonne_image.jpg" alt="Buildings" />
+          <p>Organiz-Asso</p>
+          <img className="building-img" src="/sorbonne_image.png" alt="Buildings" />
         </div>
       </div>
     </>

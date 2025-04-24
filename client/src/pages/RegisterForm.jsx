@@ -44,7 +44,7 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
 
   return (
     <>
-      <h1>Sign Up Organiz-Asso</h1>
+      <h1>Create your Account</h1>
       <div className="underline"></div>
       <form className="welcome-form" onSubmit={handleSubmit}>
         <input
