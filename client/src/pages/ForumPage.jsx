@@ -17,13 +17,14 @@ function ForumPage({users, messages, userCur , onDelete, setMessages}) {
       <div className='forum-page'>
         <div className='forum-head'>
           <h2 className="forum-title">Forum - {selectedForum.toUpperCase()}</h2>
-
+          {userCur.userStatus === 'admin' && (
           <div className="forum-selector">
             <select value={selectedForum} onChange={(e) => setSelectedForum(e.target.value)}>
               <option value="public">Public</option>
               <option value="admin">Admin</option>
             </select>
-          </div>
+          </div>)
+          }
         </div> 
         <div className="underline-black"></div>
         <div className="message-list">
