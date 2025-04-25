@@ -9,7 +9,7 @@ function WelcomePage({userCur, getConnected, users }) {
 
   const handleConnection= (user) => {
     getConnected(user)
-    if(user.userStatus == 'pending'){
+    if(user.userStatus === 'pending'){
       setContentPage('waiting');
     }
   }

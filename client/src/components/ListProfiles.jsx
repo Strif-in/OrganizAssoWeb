@@ -1,6 +1,6 @@
 import ProfileCard from './ProfileCard.jsx';
 
-function ListProfiles({ users, userCur , onPromote, onDelete}) {
+function ListProfiles({ users, userCur , onPromote, onDelete, onSelectProfile}) {
 
   return (
     <>
@@ -12,6 +12,7 @@ function ListProfiles({ users, userCur , onPromote, onDelete}) {
               userCur={userCur}
               onPromote={onPromote}
               onDelete={onDelete}
+              onSelect={() => onSelectProfile(user)}
           />
         ))}
       </div>

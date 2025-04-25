@@ -110,7 +110,7 @@ function App() {
 
     const handleLogin = (user) => {
         setUserCur(user);
-        if(user.userStatus !='pending'){
+        if(user.userStatus !=='pending'){
             setIsConnected(true);
         }
     };

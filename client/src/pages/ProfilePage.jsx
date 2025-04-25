@@ -2,8 +2,8 @@ import ListMessages from '../components/ListMessages';
 import '../css/UserProfile.css'
 import React from 'react';
  
-function ProfilePage({messages,userCur,onDelete}) {
-  const my_messages = messages.filter(msg => msg.userId === userCur.userId)
+function ProfilePage({messages,user, userCur,onDelete}) {
+  const my_messages = messages.filter(msg => msg.userId === user.userId)
  
   return (
     <>
@@ -13,11 +13,11 @@ function ProfilePage({messages,userCur,onDelete}) {
             <div className="logo">
               <img src="/logo.png" alt="Company Logo" />
             </div>    
-            <h2>{userCur.username}</h2>
-            <p><strong>Login:</strong> {userCur.userStatus}</p>
+            <h2>{user.username}</h2>
+            <p><strong>Login:</strong> {user.userStatus}</p>
           </div>
         </main>
-        <ListMessages users={[userCur]} messages={my_messages} userCur={userCur} onDelete={onDelete}/>
+        <ListMessages users={[user]} messages={my_messages} userCur={userCur} onDelete={onDelete} showReply={false}/>
       </div>
     </>
   );

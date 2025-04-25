@@ -1,4 +1,3 @@
-import '../css/NavBar.css';
 import React from 'react';
 
 

@@ -14,11 +14,11 @@ function UserPage({ userCur, users, messages, logout, onDelete , setMessages}) {
       case 'forum':
         return <ForumPage users={users} messages={messages} userCur={userCur} onDelete={onDelete} setMessages={setMessages}/>;
       case 'profile':
-        return <ProfilePage user={userCur} messages={messages} userCur={userCur} />;
+        return <ProfilePage user={userCur} messages={messages} userCur={userCur} onDelete={null}/>;
       case 'messages':
         return <MessagesPage users={users} messages={messages} userCur={userCur} onDelete={onDelete} />;
       case 'profiles':
-        return <ProfilesPage users={users} userCur={userCur}  onDelete={onDelete}/>;
+        return <ProfilesPage users={users} messages={messages} userCur={userCur}  onDelete={onDelete}/>;
       default:
         return <ForumPage messages={messages} userCur={userCur} onDelete={onDelete} />;
     }

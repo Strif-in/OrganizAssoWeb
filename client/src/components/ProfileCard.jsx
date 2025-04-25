@@ -1,12 +1,12 @@
 import '../css/ProfileCard.css'
 import React from 'react';
 
-function ProfileCard({ user, userCur, onPromote, onDelete }) {
+function ProfileCard({ user, userCur, onPromote, onDelete , onSelect}) {
     const isAdmin = userCur?.userStatus === 'admin';
 
     return (
         <>
-            <div className="profile-card">
+            <div className="profile-card" onClick={onSelect}>
                 <div className="profile-info">
 
                     <div className="profile-avatar">
@@ -23,11 +23,11 @@ function ProfileCard({ user, userCur, onPromote, onDelete }) {
                 {isAdmin && (
                     <div className="profile-actions">
 
-                    <button onClick={() => onPromote(user)} title="Promote/Demote">
+                    <button onClick={(e) => { e.stopPropagation(); onPromote(user); }} title="Promote/Demote">
                         🔼
                     </button>
                     
-                    <button onClick={() => onDelete(user)} title="Supprimer">
+                    <button onClick={(e) => { e.stopPropagation(); onDelete(user)}} title="Supprimer">
                         ✖
                     </button>
                     </div>
