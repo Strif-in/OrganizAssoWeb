@@ -1,11 +1,13 @@
 import React,{useState} from 'react';
 import ListProfiles from '../components/ListProfiles.jsx';
 import ProfilePage from './ProfilePage.jsx';
+import ProfileFilter from '../components/ProfileFilter.jsx';
  
 const ProfilesPage = ({users, messages, userCur, onDelete}) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const handlePromotion = (user) => {} //Request to change data base
-  const my_users = users.filter(user => user.userId !== userCur.userId) //Replace by request database users list
+  var profiles = users.filter(user => user.userId !== userCur.userId)
+  const [my_users, setUsers] = useState(profiles) //Replace by request database users list
 
   if (selectedUser) {
     return (
@@ -29,6 +31,7 @@ const ProfilesPage = ({users, messages, userCur, onDelete}) => {
             <ListProfiles users={my_users} userCur={userCur} onSelectProfile={setSelectedUser} onPromote={handlePromotion} onDelete={onDelete}/>
           )}
         </div>
+        <ProfileFilter users={profiles} onFilter={setUsers}/>
       </div>
     </>
   );
