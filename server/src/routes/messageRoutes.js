@@ -1,8 +1,19 @@
 const express = require('express');
-const { createMessage } = require('../controllers/messageController');
+const {
+  createMessage,
+  getAllMessages,
+  getMessageById,
+  deleteMessage,
+  updateMessage
+} = require('../controllers/messageController');
+
 const router = express.Router();
 
-// Route POST /messages
-router.post('/', createMessage);
+// CRUD Routes
+router.post('/', createMessage);              // Create
+router.get('/', getAllMessages);              // Read all
+router.get('/:id', getMessageById);           // Read one
+router.delete('/:id', deleteMessage);         // Delete
+router.patch('/:id', updateMessage);          // Update
 
 module.exports = router;

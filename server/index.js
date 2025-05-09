@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config(); // Charge le fichier .env (si present)
 
 const messageRoutes = require('.src/routes/messageRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -18,8 +19,9 @@ res.type('text/plain; charset=utf-8');
 return res.send('Bienvenue sur lAPI');
 });
 
-// Routes pour "messages"
+// Routes
 app.use('/messages', messageRoutes);
+app.use('/users', userRoutes);
 
 // Lancement du serveur
 app.listen(port, () => {
