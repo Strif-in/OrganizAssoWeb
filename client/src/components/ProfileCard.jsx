@@ -14,7 +14,7 @@ function ProfileCard({ user, userCur, onPromote, onDelete , onSelect}) {
                     </div>
 
                     <div>
-                        <h3>{user.prénom} {user.nom}</h3>
+                        <h3>{user.prenom} {user.nom}</h3>
                         <p>Status: <strong>{user.userStatus}</strong></p>
                         <p>ID: {user.userId}</p>
                     </div>

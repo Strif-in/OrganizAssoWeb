@@ -27,6 +27,8 @@ function LoginForm({ChangeToSignUp, getConnected, users }) {
             <input
                 id='username'
                 type="text"
+                minlength="8"
+                maxlength="14"
                 placeholder="Nom d'utilisateur"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -36,6 +38,8 @@ function LoginForm({ChangeToSignUp, getConnected, users }) {
                 id='password'
                 type="password"
                 placeholder="Mot de passe"
+                minlength="8"
+                maxlength="20"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

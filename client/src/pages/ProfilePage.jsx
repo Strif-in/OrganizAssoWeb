@@ -1,5 +1,5 @@
 import ListMessages from '../components/ListMessages';
-import '../css/UserProfile.css'
+import '../css/ProfilePage.css'
 import React from 'react';
  
 function ProfilePage({messages,user, userCur,onDelete}) {
@@ -7,17 +7,24 @@ function ProfilePage({messages,user, userCur,onDelete}) {
  
   return (
     <>
-      <div className="user-profile">  
+      <div className="profile-page">  
         <main className="main-content"> 
           <div className="user-info">
             <div className="logo">
               <img src="/logo.png" alt="Company Logo" />
             </div>    
+            
             <h2>{user.username}</h2>
-            <p><strong>Login:</strong> {user.userStatus}</p>
+            <p><strong>Nom :</strong> {user.nom}</p>
+            <p><strong>Prenom :</strong> {user.prenom}</p>
+            <p><strong>Status :</strong> {user.userStatus}</p>
+            <p><strong>Email :</strong> {user.email}</p>
+          </div>
+          <div className="user-messages">
+            <ListMessages users={[user]} messages={my_messages} userCur={userCur} onDelete={onDelete} showReply={false}/>
           </div>
         </main>
-        <ListMessages users={[user]} messages={my_messages} userCur={userCur} onDelete={onDelete} showReply={false}/>
+        
       </div>
     </>
   );

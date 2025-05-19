@@ -22,6 +22,7 @@ function MessageFilter({ messages, onFilter }) {
     <div className="message-filter">
       <input
         type="text"
+        size="14"
         placeholder="Auteur (username)"
         value={author}
         onChange={(e) => setAuthor(e.target.value)}
@@ -33,6 +34,7 @@ function MessageFilter({ messages, onFilter }) {
       />
       <input
         type="text"
+        size="14"
         placeholder="Mot-clé dans le message"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}

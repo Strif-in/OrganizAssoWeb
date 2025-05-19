@@ -50,8 +50,8 @@ const u = [
     {
       userId: 'u1',
       nom: 'Defina',
-      prénom: 'Stefano',
-      username: 'steph',
+      prenom: 'Stefano',
+      username: 'steph123',
       email: 'stephano.defina@example.com',
       password: 'hashed_password_1',
       userStatus: 'admin'
@@ -59,7 +59,7 @@ const u = [
     {
       userId: 'u2',
       nom: 'Setbel',
-      prénom: 'Melissa',
+      prenom: 'Melissa',
       username: 'melissa42',
       email: 'melissa.setbel@example.com',
       password: 'hashed_password_2',
@@ -68,7 +68,7 @@ const u = [
     {
       userId: 'u3',
       nom: 'Dubois',
-      prénom: 'Chloé',
+      prenom: 'Chloé',
       username: 'chloe_d',
       email: 'chloe.dubois@example.com',
       password: 'hashed_password_3',
@@ -77,7 +77,7 @@ const u = [
     {
       userId: 'u4',
       nom: 'Nguyen',
-      prénom: 'Minh',
+      prenom: 'Minh',
       username: 'minh.n',
       email: 'minh.nguyen@example.com',
       password: 'hashed_password_4',
@@ -86,7 +86,7 @@ const u = [
     {
       userId: 'u5',
       nom: 'Martinez',
-      prénom: 'Lucas',
+      prenom: 'Lucas',
       username: 'luc_m',
       email: 'lucas.martinez@example.com',
       password: 'hashed_password_5',

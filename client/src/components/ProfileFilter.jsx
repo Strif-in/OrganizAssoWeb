@@ -24,18 +24,21 @@ function ProfileFilter({ users, onFilter }) {
     <div className="message-filter">
         <input
         type="text"
+        size="10"
         placeholder="Nom"
         value={nom}
         onChange={(e) => setNom(e.target.value)}
       />
       <input
         type="text"
+        size="10"
         placeholder="Prenom"
         value={prenom}
         onChange={(e) => setPrenom(e.target.value)}
       />
       <input
         type="text"
+        size="14"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -46,3 +49,4 @@ function ProfileFilter({ users, onFilter }) {
 }
 
 export default ProfileFilter;
+//Add status filter option

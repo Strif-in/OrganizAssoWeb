@@ -33,6 +33,8 @@ function MessageForm({ forumId, userCur, onAddMessage, replyTo, clearReply }) {
 
       <textarea
         placeholder="Write your Message here..."
+        minLength="1"
+        size="255"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         required

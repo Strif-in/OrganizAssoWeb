@@ -25,11 +25,18 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
       return;
     }
 
+    // Check if username is already taken
+    const existingMail = users.find(user => user.email === email);
+    if (existingMail) {
+      setError('Ce nom d\'utilisateur existe déjà.');
+      return;
+    }
+
     // Simulate saving the user (normally, you'd POST to backend)
     const newUser = {
       userId: `u${users.length + 1}`,
       nom,
-      prénom: prenom,
+      prenom,
       username,
       email,
       password: password1,
@@ -49,6 +56,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
       <form className="welcome-form" onSubmit={handleSubmit}>
         <input
           type="text"
+          minlength="3"
+          maxlength="10"
           placeholder="Nom"
           value={nom}
           onChange={(e) => setNom(e.target.value)}
@@ -56,6 +65,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="text"
+          minlength="3"
+          maxlength="10"
           placeholder="Prénom"
           value={prenom}
           onChange={(e) => setPrenom(e.target.value)}
@@ -63,13 +74,17 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="text"
-          placeholder="Nom d'utilisateur (ID étudiant)"
+          minlength="8"
+          maxlength="14"
+          placeholder="Nom d'utilisateur"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
         <input
           type="email"
+          minlength="6"
+          maxlength="20"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -77,6 +92,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="password"
+          minlength="8"
+          maxlength="20"
           placeholder="Mot de passe"
           value={password1}
           onChange={(e) => setPassword1(e.target.value)}
@@ -84,6 +101,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="password"
+          minlength="8"
+          maxlength="20"
           placeholder="Confirmer le mot de passe"
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
