@@ -1,13 +1,12 @@
 const { 
-    getUsersFromDB, 
-    getUserByIdFromDB, 
-    insertUserToDB, 
-    deleteUserFromDB
-} = require('../models/db');
+    connectToDB,
+    closeDB,
+} = require('../db');
 
 async function getAllUsers(req, res) {
+  const database = await connectToDB();
   try {
-    const users = await getUsersFromDB();
+    const users = await database.collection('users').find().toArray();
     res.json(users);
   } catch (err) {
     console.error(err);
@@ -16,8 +15,9 @@ async function getAllUsers(req, res) {
 }
 
 async function getUserById(req, res) {
+  const database = await connectToDB();
   try {
-    const user = await getUserByIdFromDB(req.params.id);
+    const user = await database.collection('users').findOne({ _id: new ObjectId(id) });
     if (!user) return res.status(404).send('Utilisateur non trouvé');
     res.json(user);
   } catch (err) {
@@ -29,9 +29,11 @@ async function getUserById(req, res) {
 async function createUser(req, res) {
   const { username, email } = req.body;
   if (!username || !email) return res.status(400).send('Champs requis manquants');
+  const database = await connectToDB();
   try {
-    const newUser = await insertUserToDB({ username, email });
+    const newUser = await database.collection('users').insertOne(user);
     res.status(201).json(newUser);
+    return { _id: result.insertedId, ...user };
   } catch (err) {
     console.error(err);
     res.status(500).send('Erreur serveur');
@@ -39,8 +41,9 @@ async function createUser(req, res) {
 }
 
 async function deleteUser(req, res) {
+  const database = await connectToDB()
   try {
-    const result = await deleteUserFromDB(req.params.id);
+    const result = await database.collection('users').deleteOne({ _id: new ObjectId(id) });
     if (!result) return res.status(404).send('Utilisateur non trouvé');
     res.send('Utilisateur supprimé');
   } catch (err) {

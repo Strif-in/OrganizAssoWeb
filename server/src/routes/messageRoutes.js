@@ -10,10 +10,10 @@ const {
 const router = express.Router();
 
 // CRUD Routes
-router.post('/', createMessage);              // Create
-router.get('/', getAllMessages);              // Read all
-router.get('/:id', getMessageById);           // Read one
-router.delete('/:id', deleteMessage);         // Delete
-router.patch('/:id', updateMessage);          // Update
+router.post('/create', createMessage);            
+router.get('/readAll', getAllMessages);              
+router.get('/readOne', getMessageById);          
+router.delete('/delete', deleteMessage);         
+router.patch('/update', updateMessage);          
 
 module.exports = router;
