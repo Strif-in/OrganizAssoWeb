@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 function LoginForm({ChangeToSignUp, getConnected, users }) {
@@ -5,11 +6,15 @@ function LoginForm({ChangeToSignUp, getConnected, users }) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        const foundUser = users.find(
-            user => user.username === username && user.password === password
-        );
+
+        const userData = {
+            username,
+            password
+        };
+
+        const foundUser = await axios.get('http://localhost:3000/api/users/login',  userData);
 
         if (foundUser) {
             setError('');

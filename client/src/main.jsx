@@ -63,7 +63,7 @@ const u = [
       username: 'melissa42',
       email: 'melissa.setbel@example.com',
       password: 'hashed_password_2',
-      userStatus: 'pending'
+      userStatus: 'admin'
     },
     {
       userId: 'u3',
@@ -101,8 +101,8 @@ function App() {
     const [messages, setMessages] = useState();
 
     useEffect(() => {
-        const mockUsers = u;
-        const mockMessages = m;
+        const mockUsers = axios.get('http://localhost:3000/api/users/get');
+        const mockMessages = axios.get('http://localhost:3000/api/messages/readAll');
     
         setUsers(mockUsers);
         setMessages(mockMessages);
