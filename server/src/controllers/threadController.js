@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 async function createThread(req, res) {
 
-    const { forumId ,title ,authorId ,date} = req.body;
+    const { forumId ,title , username } = req.body;
 
     // Vérification des données
     if (!title) {
@@ -15,8 +15,6 @@ async function createThread(req, res) {
     const collection = db.collection('threads');
     const userCollection = db.collection('users');
 
-     // Récupération de l'ID de l'utilisateur   
-     const username = authorId; // Assurez-vous que l'ID de l'utilisateur est récupéré correctement
 
     // Vérification si l'utilisateur existe déjà
     const existingUser = await userCollection.findOne({ username: username });
@@ -26,7 +24,7 @@ async function createThread(req, res) {
     }
 
     const hash = crypto.createHash('sha256');
-    hash.update(username + title + forumId + date); // Concatenate authorId and title
+    hash.update(username + title + forumId); // Concatenate authorId and title
     const threadId = hash.digest('hex');
 
     const threadExists = await collection.findOne({ id: threadId });
@@ -34,15 +32,18 @@ async function createThread(req, res) {
         return res.status(409).json({ message: 'Thread already exists' });
     }
 
+    if (forumId=="forumAdmin" && existingUser.isAdmin == false) {
+        return res.status(403).json({ message: 'User is not admin' });
+    }
     // Création du thread
 
     const newThread = {
         id: threadId,
         forumId: forumId,
         title: title,
-        authorId: authorId,
-        createdAt: date,
-        updatedAt: date
+        username: username,
+        createdAt: new Date(),
+        updatedAt: new Date()
     };
 
     await collection.insertOne(newThread)
@@ -59,26 +60,35 @@ async function createThread(req, res) {
 }
 
 async function getThreadById(req, res) {
-    const { threadId } = req.params;
+    const { threadId } = req.body;
 
     // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('threads');
 
-    // Récupération du thread par ID
-    const thread = await collection.findOne({ id: threadId });
+    try{
+        // Vérification si le thread existe déjà
+        const thread = await collection.findOne({ id: threadId });
+        if (!thread) {
+            return res.status(404).json({ message: 'Thread not found' });
+        }
+        return res.status(200).json(thread);
+    }catch (error){
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 
-    return res.status(200).json(thread);
+    
 }
 async function getThreadsByForumId(req, res) {
     const { forumId } = req.body;
-
-    // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('threads');
-    // Récupération des threads par forumId
-    const threadList = await collection.find({ forumId }).toArray();
-    return res.status(200).json({threads: threadList});
+    try{
+        const threadList = await collection.find({ forumId }).toArray();
+        return res.status(200).json({threads: threadList});
+    }catch (error){
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
     

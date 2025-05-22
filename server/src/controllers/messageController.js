@@ -2,28 +2,23 @@ const { connectToDB } = require('../db');
 const crypto = require('crypto');
 
 async function createMessage(req, res) {
-    const { threadId, forumId, authorId, content, date, parentMessageId } = req.body;
-    // Vérification des données
+    const { threadId, username, content, parentMessageId } = req.body;
     if (!content || !threadId) {
         return res.status(400).json({ message: 'missing field' });
     }
-    // Connexion à la base de données
+    
     const db = await connectToDB();
     const collection = db.collection('messages');
 
     const userCollection = db.collection('users');
 
-     // Récupération de l'ID de l'utilisateur   
-    const username = authorId; // Assurez-vous que l'ID de l'utilisateur est récupéré correctement
-
-    // Vérification si l'utilisateur existe déjà
     const existingUser = await userCollection.findOne({ username: username });
     if (!existingUser) {
         return res.status(409).json({ message: 'User does not exist' });
     }
 
     const hash = crypto.createHash('sha256');
-    hash.update(username + content + threadId + date); // Concatenate authorId and title
+    hash.update(username + content + threadId);
     const msgId = hash.digest('hex');
 
     // Vérification si le message existe déjà
@@ -38,11 +33,10 @@ async function createMessage(req, res) {
     // Création du message
     const newMessage = {
         id: msgId,
-        forumId : forumId,
         content : content,
         threadId: threadId,
-        authorId : username,
-        createdAt: date,
+        username : username,
+        createdAt: new Date(),
         parentMessageId: parentMessageId
     };
 
@@ -56,29 +50,34 @@ async function createMessage(req, res) {
         });
 }
 
-async function getMessages(req, res) {
-    const { threadId } = req.params;
+async function getAllMessages(req, res) {
+    const { threadId } = req.body;
 
-    // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('messages');
 
-    // Récupération des messages du thread
+    try{
+    
     const messages = await collection.find({ threadId }).toArray();
-
-    // Envoi de la réponse
     return res.status(200).json({messages : messages });
+    }
+    catch (error) {
+        console.error('Error retrieving messages:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 async function deleteMessage(req, res) {
-    const { messageId } = req.params;
+    const { id } = req.body;
 
-    // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('messages');
-
+    const message = await collection.findOne({ id: id });
+    if (!message) { 
+        return res.status(404).json({ message: 'Message not found' });
+    }
     // Suppression du message
-    await collection.deleteOne({ _id: messageId })
+    await collection.deleteOne({ id: id })
         .then(() => {
             return res.status(200).json({ message: 'message deleted successfully' });
         })
@@ -88,90 +87,67 @@ async function deleteMessage(req, res) {
         });
 }
 
-async function updateMessage(req, res) {
-    const { messageId } = req.params;
-    const { content } = req.body;
-
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('messages');
-
-    // Mise à jour du message
-    await collection.updateOne({ _id: messageId }, { $set: { content } })
-        .then(() => {
-            return res.status(200).json({ message: 'message updated successfully' });
-        })
-        .catch((error) => {
-            console.error('Error updating message:', error);
-            return res.status(500).json({ message: 'Internal server error' });
-        });
-}
 async function getMessage(req, res) {
-    const { messageId } = req.params;
+    const { id } = req.body;
 
     // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('messages');
 
     // Récupération du message
-    const message = await collection.findOne({ _id: messageId });
+    const message = await collection.findOne({ id: id });
 
     if (!message) {
         return res.status(404).json({ message: 'message not found' });
     }
 
-    // Envoi de la réponse
-    return res.status(200).json({messages : messages });
+    return res.status(200).json({message : message });
 }
 
-async function getAllMessages(req, res) {
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('messages');
-
-    // Récupération de tous les messages
-    const messages = await collection.find().toArray();
-
-    // Envoi de la réponse
-    return res.status(200).json({messages : messages });
-}
 async function getMessagesByUser(req, res) {
-    const { userId } = req.params;
+    const { username } = req.body;
 
     // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('messages');
 
-    // Récupération des messages de l'utilisateur
-    const messages = await collection.find({ authorId: userId }).toArray();
+    try{
+        const messages = await collection.find({ username: username }).toArray();
+        const user = await db.collection('users').findOne({ username: username });
+        if (!user) {   
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-    // Envoi de la réponse
-    return res.status(200).json({messages : messages });
+        return res.status(200).json({messages : messages });
+    }catch(error) {
+        console.error('Error retrieving messages:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 async function getMessagesByThread(req, res) {
-    console.log("getMessagesByThread called", req.body);
-    const { threadId } = req.body;
-    console.log("Thread ID:", threadId);
-      
 
-    // Connexion à la base de données
+    const { threadId } = req.body;
+
+      
     const db = await connectToDB();
     const collection = db.collection('messages');
-
-    // Récupération des messages du thread
-    const messages = await collection.find({ threadId }).toArray();
-    console.log("Messages:", messages);
-
-    // Envoi de la réponse
-    return res.status(200).json({messages : messages });
+    try{
+        const thread = await db.collection('threads').findOne({ id : threadId });
+        if (!thread) {
+            return res.status(404).json({ message: 'Thread not found' });
+        }
+        const messages = await collection.find({ threadId :threadId }).toArray();
+        return res.status(200).json({messages : messages });
+    }catch (error) {    
+        console.error('Error retrieving thread:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 
 module.exports = {
     createMessage,
-    getMessages,
     deleteMessage,
-    updateMessage,
     getMessage,
     getAllMessages,
     getMessagesByUser,

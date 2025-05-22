@@ -8,8 +8,8 @@ const routeThread = require('./routes/threadRoutes');
 
 router.use('/users', routeUser);
 
-router.use('/thread', routeThread);
+router.use('/threads', routeThread);
 
-router.use('/message', routeMessage);
+router.use('/messages', routeMessage);
 
 module.exports = router;
