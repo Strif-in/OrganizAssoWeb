@@ -4,7 +4,7 @@ const { MongoClient } = require('mongodb');
  // Remarque : Si DB_URI n'est pas defini, la connexion par defaut se fait sur '
 //localhost' (port 27017)
 const uri = process.env.DB_URI || 'mongodb://localhost:27017';
-const dbName = process.env.DB_NAME || 'asso_db';
+const dbName = process.env.DB_NAME || 'db';
 
  // Creation du client MongoDB
 const client = new MongoClient(uri, { connectTimeoutMS: 5000 });

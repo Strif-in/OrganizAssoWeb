@@ -1,151 +1,119 @@
-const { connectToDB } = require('../db');
+const { 
+    connectToDB,
+    closeDB,
+} = require('../db');
 
-
-async function getPendingUsers(req, res) {
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('users');
-
-    // Vérification des informations d'identification de l'utilisateur
-    const user = await collection.find({ isMember: false }).toArray();
-    // Envoi de la réponse 
-    return res.status(200).json({ message: 'Pending users retrieved successfully', pendingUsers: user });
-}
-
-async function approveUsers(req, res) {
-    console.log("ca bug la");
-
-    const { username } = req.body;
-    if (!username) {
-        return res.status(400).json({ message: 'User ID is required' });
-    }
-
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('users');
-    // Vérification des informations d'identification de l'utilisateur
-    const user = await collection.findOne({ username: username });
-    console.log(user);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-    // Vérification si l'utilisateur est déjà membre
-    if (user.isMember) {
-        return res.status(400).json({ message: 'User is already a member' });
-    }
-    // Mise à jour de l'utilisateur pour le rendre membre
-    await collection.updateOne({ username: username }, { $set: { isMember: true } });
-    // Envoi de la réponse
-    return res.status(200).json({ message: 'User approved successfully' });
-}
-
-async function rejectUsers(req, res) {
-    console.log("ca bug ici");
-
-    const { username } = req.body;
-    if (!username) {
-        return res.status(400).json({ message: 'User ID is required' });
-    }
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('users');
+async function getAllUsers(req, res) {
+  const database = await connectToDB();
+  try {
+    const users = await database.collection('users').find().toArray();
     
-    // Vérification des informations d'identification de l'utilisateur
-    const user = await collection.findOne({ username: username });
-    console.log(user);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-    // Vérification si l'utilisateur est déjà membre
-    if (user.isMember) {
-        return res.status(400).json({ message: 'User is already a member' });
-    }
-    // Mise à jour de l'utilisateur pour le rendre membre
-    await collection.deleteOne({ username: username });
-    // Envoi de la réponse
-    return res.status(200).json({ message: 'User rejected successfully' });
+    return res.status(200).json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 }
 
-
-async function retrogradeUsers(req, res) {
-
-    const { username } = req.body;
-    if (!username) {
-        return res.status(400).json({ message: 'User ID is required' });
-    }
-
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('users');
-    // Vérification des informations d'identification de l'utilisateur
-    const user = await collection.findOne({ username: username });
-    console.log(user);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-    // Vérification si l'utilisateur est déjà membre
-    if (!user.isMember) {
-        return res.status(400).json({ message: 'User is not a member' });
-    }
-    // Vérification si l'utilisateur est déjà admin
-    if (!user.isAdmin) {
-        return res.status(400).json({ message: 'User is not an admin' });
-    }
-    // Mise à jour de l'utilisateur pour le rendre membre
-    await collection.updateOne({ username: username }, { $set: { isAdmin: false } });
-    // Envoi de la réponse
-    return res.status(200).json({ message: 'User retrograded successfully' });
+async function getUserByUsername(req, res) {
+  const {username} = req.body;
+  if (!username) return res.status(400).send('Champs requis manquants');
+  const database = await connectToDB();
+  try {
+    const user = await database.collection('users').findOne({username : username});
+    if (!user) return res.status(404).send('Utilisateur non trouvé');
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 }
 
-async function upgradeUsers(req, res) {
+async function createUser(req, res) {
+  const { username, password, email } = req.body;
+  if (!username || ! password || !email) return res.status(400).send('Champs requis manquants');
 
-    const { username } = req.body;
-    if (!username) {
-        return res.status(400).json({ message: 'User ID is required' });
+  const database = await connectToDB();
+  const userExist = await database.collection('users').findOne({ username });
+    if (userExist) {
+        return res.status(409).json({ message: 'Username already exists' });
     }
-
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('users');
-    // Vérification des informations d'identification de l'utilisateur
-    const user = await collection.findOne({ username: username });
-    console.log(user);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-    // Vérification si l'utilisateur est déjà membre
-    if (!user.isMember) {
-        return res.status(400).json({ message: 'User is not a member' });
-    }
-    // Vérification si l'utilisateur est déjà admin
-    if (user.isAdmin) {
-        return res.status(400).json({ message: 'User is already admin' });
-    }
-    // Mise à jour de l'utilisateur pour le rendre membre
-    await collection.updateOne({ username: username }, { $set: { isAdmin: true } });
-    // Envoi de la réponse
-    return res.status(200).json({ message: 'User upgraded successfully' });
+  try {
+    const newUser = {
+        username,
+        password,
+        email,
+        isAdmin: false,
+        isMember: false,
+        createdAt: new Date(),
+    };
+    await database.collection('users').insertOne(newUser);
+    return res.status(201).json(newUser);
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 }
 
-async function listUsers(req, res) {
-    // Connexion à la base de données
-    const db = await connectToDB();
-    const collection = db.collection('users');
-
-    // Vérification des informations d'identification de l'utilisateur
-    const user = await collection.find({}).toArray();
-    // Envoi de la réponse 
-    return res.status(200).json({ message: 'All users retrieved successfully', allUsers: user });
+async function deleteUser(req, res) {
+  const {username} = req.body;
+  if (!username) return res.status(400).send('Champs requis manquants');
+  const database = await connectToDB();
+  try {
+    const result = await database.collection('users').deleteOne({ username : username });
+    if (!result) return res.status(404).send('Utilisateur non trouvé');
+    return res.status(200).send('Utilisateur supprimé');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 }
 
+async function loginUser(req, res) {
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).send('Champs requis manquants');
+  
+    try {
+      const db = await connectToDB();
+  
+      const user = await db.collection('users').findOne({ username:username, password:password });
+  
+      if (!user) return res.status(401).send('Identifiants incorrects');
+      if (user.isMember === false) return res.status(403).send('En attente de validation admin');
+      if (user.isAdmin === true) return res.status(201).send('connexion admin');
+      else {
+        return res.status(200).send('connexion membre');
+      }
+    } catch (err) {
+      res.status(500).send('Erreur serveur');
+    }
+}
 
+async function approveUser(req, res) {  
+    const { username } = req.body;  
+    if (!username) return res.status(400).send('Champs requis manquants');
+    
+    try {
+      const db = await connectToDB();
+      const result = await db.collection('users').updateOne(
+        { username: username },
+        { $set: { isMember: true } }
+      );
+      
+      if (result.matchedCount === 0) return res.status(404).send('Utilisateur non trouvé');
+      return res.status(200).send('Utilisateur validé');
+    } catch (err) {
+      res.status(500).send('Erreur serveur');
+    }
+}
+  
 
 module.exports = {
-    getPendingUsers,
-    approveUsers,
-    rejectUsers,
-    retrogradeUsers,
-    upgradeUsers,
-    listUsers,
-    // Ajoutez d'autres fonctions de contrôleur ici si nécessaire
+  getAllUsers,
+  getUserByUsername,
+  createUser,
+  deleteUser,
+  loginUser,
+  approveUser,
 };
