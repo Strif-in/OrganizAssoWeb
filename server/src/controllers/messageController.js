@@ -32,7 +32,7 @@ async function createMessage(req, res) {
     
     // Création du message
     const newMessage = {
-        id: msgId,
+        msgId: msgId,
         content : content,
         forumId: forumId,
         username : username,
@@ -65,16 +65,16 @@ async function getAllMessages(req, res) {
 }
 
 async function deleteMessage(req, res) {
-    const { id } = req.body;
+    const { msgId } = req.body;
 
     const db = await connectToDB();
     const collection = db.collection('messages');
-    const message = await collection.findOne({ id: id });
+    const message = await collection.findOne({ msgId: msgId });
     if (!message) { 
         return res.status(404).json({ message: 'Message not found' });
     }
     // Suppression du message
-    await collection.deleteOne({ id: id })
+    await collection.deleteOne({ msgId: msgId })
         .then(() => {
             return res.status(200).json({ message: 'message deleted successfully' });
         })
@@ -85,14 +85,14 @@ async function deleteMessage(req, res) {
 }
 
 async function getMessage(req, res) {
-    const { id } = req.body;
+    const { msgId } = req.body;
 
     // Connexion à la base de données
     const db = await connectToDB();
     const collection = db.collection('messages');
 
     // Récupération du message
-    const message = await collection.findOne({ id: id });
+    const message = await collection.findOne({ msgId: msgId });
 
     if (!message) {
         return res.status(404).json({ message: 'message not found' });
@@ -121,6 +121,8 @@ async function getMessagesByUser(req, res) {
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
+
+/*
 async function getMessagesByThread(req, res) {
 
     const { threadId } = req.body;
@@ -129,7 +131,7 @@ async function getMessagesByThread(req, res) {
     const db = await connectToDB();
     const collection = db.collection('messages');
     try{
-        const thread = await db.collection('threads').findOne({ id : threadId });
+        const thread = await db.collection('threads').findOne({ msgId : msgId });
         if (!thread) {
             return res.status(404).json({ message: 'Thread not found' });
         }
@@ -140,7 +142,7 @@ async function getMessagesByThread(req, res) {
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
-
+*/
 
 module.exports = {
     createMessage,
@@ -148,6 +150,6 @@ module.exports = {
     getMessage,
     getAllMessages,
     getMessagesByUser,
-    getMessagesByThread
+    //getMessagesByThread
 };
 

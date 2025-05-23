@@ -1,13 +1,13 @@
 import MessageCard from './MessageCard';
 
 function ListMessages({ users, messages, userCur, onReply, onDelete, showReply = true }) {
-  const getMessageById = (id) => messages.find(msg => msg.messageId === id);
+  const getMessageById = (msgId) => messages.find(msg => msg.msgId === msgId);
 
   return (
     <div className="message-list">
       {messages.map(msg => (
         <MessageCard
-          key={msg.messageId}
+          key={msg.msgId}
           users={users}
           message={msg}
           userCur={userCur}

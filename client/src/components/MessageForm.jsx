@@ -1,6 +1,6 @@
-import '../css/MessageForm.css';
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
+import '../css/MessageForm.css';
 
 function MessageForm({ forumId, userCur, onAddMessage, onForceRefresh, replyTo, clearReply }) {
   const [content, setContent] = useState('');
@@ -13,7 +13,7 @@ function MessageForm({ forumId, userCur, onAddMessage, onForceRefresh, replyTo, 
         username: userCur.username,
         content: content,
         forumId: forumId,
-        parentMessageId: replyTo ? replyTo.messageId : null
+        parentMessageId: replyTo ? replyTo.msgId : null
       });
   
       if (response.data?.message) {
@@ -35,7 +35,7 @@ function MessageForm({ forumId, userCur, onAddMessage, onForceRefresh, replyTo, 
     <form className="message-form" onSubmit={handleSubmit}>
       {replyTo && (
         <div className="reply-preview">
-          Répondre à <strong>{replyTo.userId}</strong>: "{replyTo.contenu.slice(0, 40)}..."
+          Répondre à <strong>{replyTo.username}</strong>: "{replyTo.content.slice(0, 40)}..."
           <button type="button" onClick={clearReply}>✖</button>
         </div>
       )}

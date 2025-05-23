@@ -1,10 +1,39 @@
-import ListMessages from '../components/ListMessages';
+import axios from 'axios';
+import React,{useEffect, useState} from 'react';
 import '../css/ProfilePage.css'
-import React from 'react';
+import ListMessages from '../components/ListMessages';
  
-function ProfilePage({messages,user, userCur,onDelete}) {
-  const my_messages = messages.filter(msg => msg.userId === user.userId)
- 
+function ProfilePage({user, userCur,onDelete}) {
+  const [messages, setMessages] = useState([]);
+  const fetchUserMessages = async () => {
+    try {
+      const res = await axios.post('http://localhost:8000/api/messages/getByUser', {
+        username: user.username,
+      });
+      if (res.data?.messages) {
+        setMessages(res.data.messages);
+      }
+    } catch (err) {
+      console.error("Erreur lors du chargement des messages de l'utilisateur :", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserMessages();
+    setMessages(messages.filter(msg => msg.username === user.username))
+  }, []);
+
+  const handleDelete = async (message) => {
+    try {
+      await axios.delete('http://localhost:8000/api/messages/delete', {
+        data: { msgId: message.msgId }
+      });
+      fetchUserMessages();
+    } catch (err) {
+      console.error('Erreur de suppression:', err);
+    }
+  };
+
   return (
     <>
       <div className="profile-page">  
@@ -21,7 +50,10 @@ function ProfilePage({messages,user, userCur,onDelete}) {
             <p><strong>Email :</strong> {user.email}</p>
           </div>
           <div className="user-messages">
-            <ListMessages users={[user]} messages={my_messages} userCur={userCur} onDelete={onDelete} showReply={false}/>
+            <h1>My Messages</h1>
+            <div className="underline-black"></div>
+            <ListMessages users={[user]} messages={messages} userCur={userCur} onDelete={handleDelete} showReply={false}/>
+            <div className="underline-black"></div>
           </div>
         </main>
         

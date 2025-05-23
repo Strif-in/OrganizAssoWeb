@@ -1,15 +1,26 @@
+import axios from 'axios';
 import React, {useEffect, useState } from 'react';
+import '../css/UserPage.css';
 import NavBar from '../components/NavBar';
 import ForumPage from './ForumPage';
 import ProfilePage from './ProfilePage';
 import MessagesPage from './MessagesPage';
 import ProfilesPage from './ProfilesPage';
-import axios from 'axios';
-import '../css/UserPage.css';
+
 
 function UserPage({ userCur, logout}) {
   const [currentPage, setCurrentPage] = useState('forum');
   const [users, setUsers] = useState();
+  const [selectedUser, setSelectedUser] = useState(userCur);
+
+  const handleSelection = (user) => {
+    setCurrentPage('profile');
+    setSelectedUser(user)
+  }
+
+  const backtoUserCur = () => {
+    setSelectedUser(userCur);
+  }
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,11 +42,11 @@ function UserPage({ userCur, logout}) {
       case 'forum':
         return <ForumPage users={users} userCur={userCur} />;
       case 'profile':
-        return <ProfilePage user={userCur} userCur={userCur} />;
+        return <ProfilePage user={selectedUser} userCur={userCur} />;
       case 'messages':
         return <MessagesPage users={users} userCur={userCur} />;
       case 'profiles':
-        return <ProfilesPage users={users} userCur={userCur} />;
+        return <ProfilesPage userCur={userCur} onSelect={handleSelection}/>;
       default:
         return <p>UserPage Default</p>;
     }
@@ -45,9 +56,11 @@ function UserPage({ userCur, logout}) {
     <>
       <div className="user-page">
         <header>
-          <button onClick={() => setCurrentPage('profile')}>Mon Profil</button>
+          <h2>Organiz-Asso</h2>
+          <button onClick={() => {setCurrentPage('profile');backtoUserCur();}}>Mon Profil</button>
           <NavBar 
             setCurrentPage={setCurrentPage} 
+            backtoUserCur={backtoUserCur}
           />
           <button onClick={logout}>Logout</button>
         </header>

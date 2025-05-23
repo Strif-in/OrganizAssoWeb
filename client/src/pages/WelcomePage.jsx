@@ -1,9 +1,11 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import '../css/WelcomePage.css';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import WaitingPage from './WaitingPage';
-import axios from 'axios';
-import '../css/WelcomePage.css';  // Optional for styling
+
+
 
 function WelcomePage({userCur, getConnected}) {
   const [contentPage, setContentPage] = useState('login');

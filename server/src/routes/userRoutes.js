@@ -7,6 +7,7 @@ const {
     loginUser, 
     approveUser,
     promoteUser,
+    demoteUser,
 } = require('../controllers/userController');
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.delete('/delete', deleteUser);
 router.post('/login', loginUser);
 router.patch('/approve', approveUser);
 router.patch('/promote', promoteUser);
+router.patch('/demote', demoteUser)
 
 module.exports = router;

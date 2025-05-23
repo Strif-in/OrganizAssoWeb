@@ -138,7 +138,24 @@ async function promoteUser(req, res) {
     res.status(500).send('Erreur serveur');
   }
 }
+
+async function demoteUser(req, res) {  
+  const { username } = req.body;  
+  if (!username) return res.status(400).send('Champs requis manquants');
   
+  try {
+    const db = await connectToDB();
+    const result = await db.collection('users').updateOne(
+      { username: username },
+      { $set: { isAdmin: false } }
+    );
+    
+    if (result.matchedCount === 0) return res.status(404).send('Utilisateur non trouvé');
+    return res.status(200).send('Utilisateur depromue');
+  } catch (err) {
+    res.status(500).send('Erreur serveur');
+  }
+}
 
 module.exports = {
   getAllUsers,
@@ -148,4 +165,5 @@ module.exports = {
   loginUser,
   approveUser,
   promoteUser,
+  demoteUser,
 };

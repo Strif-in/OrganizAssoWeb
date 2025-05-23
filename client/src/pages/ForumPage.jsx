@@ -1,6 +1,6 @@
-import '../css/ForumPage.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import '../css/ForumPage.css';
 import ListMessages from '../components/ListMessages.jsx';
 import MessageForm from '../components/MessageForm.jsx';
 
@@ -27,9 +27,9 @@ function ForumPage({ users, userCur }) {
   const handleDelete = async (message) => {
     try {
       await axios.delete('http://localhost:8000/api/messages/delete', {
-        data: { id: message.messageId }
+        data: { msgId: message.msgId }
       });
-      setMessages(prev => prev.filter(m => m.messageId !== message.messageId));
+      fetchMessages();
     } catch (err) {
       console.error('Erreur de suppression:', err);
     }
@@ -47,7 +47,7 @@ function ForumPage({ users, userCur }) {
         <h2 className="forum-title">Forum - {selectedForum.toUpperCase()}</h2>
         {userCur.isAdmin && (
           <div className="forum-selector">
-            <select value={selectedForum} onChange={(e) => setSelectedForum(e.target.value)}>
+            <select value={selectedForum} onChange={(e) => {setSelectedForum(e.target.value); setReplyTo();}}>
               <option value="public">Public</option>
               <option value="admin">Admin</option>
             </select>

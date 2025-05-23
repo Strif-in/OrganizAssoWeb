@@ -1,29 +1,69 @@
-import React, { useState }from 'react';
+import axios from 'axios';
+import React, { use, useEffect, useState } from 'react';
+import '../css/MessagesPage.css';
 import ListMessages from '../components/ListMessages.jsx';
 import MessageFilter from '../components/MessageFilter.jsx';
-import "../css/MessagesPage.css"
- 
-function MessagesPage ({users, messages, userCur, onDelete}) {
-  var allowed_messages = messages
-  if(userCur.userStatus !== "admin"){
-    allowed_messages = messages.filter(msg => msg.forumId !== "admin");
-  }
-  const [filteredMessages, setFilteredMessages] = useState(allowed_messages);
-    
-  return (
-    <>
-      <div className='messages-page'>
 
-        <h2>Results({filteredMessages.length})</h2>
-        <div className="underline-black"></div>
-        <div className="messages-list">
-          <ListMessages users={users} messages={filteredMessages} userCur={userCur} onDelete={onDelete} showReply={false}/>
-        </div>
-        <div className="underline-black"></div>
-        <MessageFilter messages={allowed_messages} onFilter={setFilteredMessages} />
-        
+function MessagesPage({ users, userCur }) {
+  const [messages, setMessages] = useState([]);
+  const [filteredMessages, setFilteredMessages] = useState([]);
+
+  const fetchMessages = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/api/messages/getAll');
+      if (res.data?.messages) {
+        let allMessages = res.data.messages;
+
+        if (!userCur.isAdmin) {
+          allMessages = allMessages.filter(msg => msg.forumId !== 'admin');
+        }
+
+        setMessages(allMessages);
+        setFilteredMessages(allMessages); // reset filter each time we fetch
+      }
+    } catch (err) {
+      console.error('Erreur lors du chargement des messages:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+
+  const handleDelete = async (message) => {
+    try {
+      await axios.delete('http://localhost:8000/api/messages/delete', {
+        data: { msgId: message.msgId }
+      });
+      fetchMessages(); // re-fetch to refresh list
+    } catch (err) {
+      console.error('Erreur de suppression:', err);
+    }
+  };
+
+  return (
+    <div className="messages-page">
+      <h2>Results ({filteredMessages.length})</h2>
+      <div className="underline-black"></div>
+
+      <div className="messages-list">
+        <ListMessages
+          users={users}
+          messages={filteredMessages}
+          userCur={userCur}
+          onDelete={handleDelete}
+          showReply={false}
+        />
       </div>
-    </>
+
+      <div className="underline-black"></div>
+
+      <MessageFilter
+        userCur={userCur}
+        messages={messages}
+        onFilter={setFilteredMessages}
+      />
+    </div>
   );
 }
 

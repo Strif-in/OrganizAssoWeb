@@ -1,13 +1,13 @@
 import React from 'react';
 
 
-function NavBar({ setCurrentPage }) {
+function NavBar({ setCurrentPage, backtoUserCur}) {
   return (
     <>
       <nav className="navbar">
-        <button onClick={() => setCurrentPage('forum')}>Forum</button>
-        <button onClick={() => setCurrentPage('profiles')}>Recherche Profils</button>
-        <button onClick={() => setCurrentPage('messages')}>Recherche Messages</button>
+        <button onClick={() => {setCurrentPage('forum');backtoUserCur();}}>Forum</button>
+        <button onClick={() => {setCurrentPage('profiles');backtoUserCur();}}>Recherche Profils</button>
+        <button onClick={() => {setCurrentPage('messages');backtoUserCur();}}>Recherche Messages</button>
       </nav>
     </>
   );

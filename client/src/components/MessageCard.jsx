@@ -1,8 +1,8 @@
-import '../css/MessageCard.css';
 import React from 'react';
+import '../css/MessageCard.css';
 
 function MessageCard({ users, message, userCur, onReply, onDelete, getMessageById, showReply = true }) {
-  const isAdmin = userCur?.userStatus === 'admin';
+  const isAdmin = userCur.isAdmin;
   const isAuthor = message.username === userCur?.username;
   const author = users.find(user => user.username === message.username);
   const repliedMessage = message.parentMessageId ? getMessageById(message.parentMessageId) : null;
@@ -12,7 +12,7 @@ function MessageCard({ users, message, userCur, onReply, onDelete, getMessageByI
       {repliedMessage && (
         <div className="quoted-message">
           <strong>{repliedMessage.username}:</strong>
-          <p>"{repliedMessage.content.slice(0, 50)}..."</p>
+          <p>"{repliedMessage.content.slice(0, 40)}..."</p>
         </div>
       )}
 
