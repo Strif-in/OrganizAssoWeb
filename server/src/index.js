@@ -5,6 +5,8 @@ const app = express();
 const {MongoClient} = require('mongodb');
 const uri = 'mongodb://localhost:27017';
 const client = new MongoClient(uri);
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
 
 const connect = async () => {
     try {
@@ -36,7 +38,6 @@ const connect = async () => {
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use('/api', api);
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-}
-);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

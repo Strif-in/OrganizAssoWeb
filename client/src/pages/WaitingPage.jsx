@@ -1,11 +1,7 @@
 import React from 'react';
 import '../css/WaitingPage.css';
 
-function WaitingPage({userCur, checkUser}) {
-  const handleReload = () => {
-    // For now, just call checkUser to simulate validation complete
-    checkUser();
-  };
+function WaitingPage({userCur, login}) {
 
   return (
     <>
@@ -13,9 +9,9 @@ function WaitingPage({userCur, checkUser}) {
       <div className="underline"></div>
       <div className="waiting-page">
         <h2>En attente de validation</h2>
-        <p>Votre compte {userCur.username} est en cours de validation par un administrateur.</p>
+        <p>Votre compte <strong>{userCur}</strong> est en cours de validation par un administrateur.</p>
         <div className="button-group">
-          <button onClick={handleReload}>Back to Login  </button>
+          <button onClick={login}>Back to Login  </button>
         </div>
       </div>
     </>

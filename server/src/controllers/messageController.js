@@ -2,8 +2,8 @@ const { connectToDB } = require('../db');
 const crypto = require('crypto');
 
 async function createMessage(req, res) {
-    const { threadId, username, content, parentMessageId } = req.body;
-    if (!content || !threadId) {
+    const { forumId, username, content, parentMessageId } = req.body;
+    if (!content || !forumId) {
         return res.status(400).json({ message: 'missing field' });
     }
     
@@ -18,7 +18,7 @@ async function createMessage(req, res) {
     }
 
     const hash = crypto.createHash('sha256');
-    hash.update(username + content + threadId);
+    hash.update(username + content + forumId);
     const msgId = hash.digest('hex');
 
     // Vérification si le message existe déjà
@@ -34,7 +34,7 @@ async function createMessage(req, res) {
     const newMessage = {
         id: msgId,
         content : content,
-        threadId: threadId,
+        forumId: forumId,
         username : username,
         createdAt: new Date(),
         parentMessageId: parentMessageId
@@ -51,15 +51,12 @@ async function createMessage(req, res) {
 }
 
 async function getAllMessages(req, res) {
-    const { threadId } = req.body;
 
     const db = await connectToDB();
-    const collection = db.collection('messages');
-
     try{
     
-    const messages = await collection.find({ threadId }).toArray();
-    return res.status(200).json({messages : messages });
+        const messages = await db.collection('messages').find().toArray();
+        return res.status(200).json({messages : messages });
     }
     catch (error) {
         console.error('Error retrieving messages:', error);

@@ -1,29 +1,38 @@
-import '../css/MessageForm.css'
+import '../css/MessageForm.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 
-function MessageForm({ forumId, userCur, onAddMessage, replyTo, clearReply }) {
+function MessageForm({ forumId, userCur, onAddMessage, onForceRefresh, replyTo, clearReply }) {
   const [content, setContent] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newMessage = {
-      messageId: 'm' + Date.now(),
-      userId: userCur.userId,
-      contenu: content,
-      date: new Date().toISOString(),
-      replyMesId: replyTo ? replyTo.messageId : null,
-      forumId
-    };
-
-    onAddMessage(newMessage);
-    setContent('');
-		clearReply();
+  
+    try {
+      const response = await axios.post('http://localhost:8000/api/messages/create', {
+        username: userCur.username,
+        content: content,
+        forumId: forumId,
+        parentMessageId: replyTo ? replyTo.messageId : null
+      });
+  
+      if (response.data?.message) {
+        onAddMessage(response.data.message); 
+        setContent('');
+        clearReply();
+  
+        setTimeout(() => {
+          onForceRefresh();
+        }, 1000);
+      }
+    } catch (err) {
+      console.error('Erreur lors de l\'envoi du message :', err);
+    }
   };
+  
 
   return (
     <form className="message-form" onSubmit={handleSubmit}>
-
       {replyTo && (
         <div className="reply-preview">
           Répondre à <strong>{replyTo.userId}</strong>: "{replyTo.contenu.slice(0, 40)}..."
@@ -41,9 +50,9 @@ function MessageForm({ forumId, userCur, onAddMessage, replyTo, clearReply }) {
       />
 
       <button type="submit" className="send-button" title="Envoyer"> ➤ </button>
-      
     </form>
   );
 }
 
 export default MessageForm;
+

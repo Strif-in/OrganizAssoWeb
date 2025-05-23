@@ -1,28 +1,47 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-function LoginForm({ChangeToSignUp, getConnected, users }) {
+function LoginForm({ChangeToSignUp, getConnected}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const userData = {
+        console.log('Form submitted');
+      
+        try {
+          const response = await axios.post('http://localhost:8000/api/users/login', {
             username,
             password
-        };
-
-        const foundUser = await axios.get('http://localhost:3000/api/users/login',  userData);
-
-        if (foundUser) {
-            setError('');
-            getConnected(foundUser);   // Notify App of successful login
-        }else {
-            setError('Nom d\'utilisateur ou mot de passe incorrect.');
+          });
+      
+          setError('');
+      
+          if (response.status === 201) {
+            // Admin login
+            getConnected({ username, role: 'admin' });
+          } else if (response.status === 200) {
+            // Member login
+            getConnected({ username, role: 'member' });
+          }
+      
+        } catch (err) {
+          if (err.response) {
+            if (err.response.status === 401) {
+              setError("Nom d'utilisateur ou mot de passe incorrect.");
+            } else if (err.response.status === 403) {
+              setError("En attente de validation par un administrateur.");
+            } else {
+              setError("Erreur inconnue. Veuillez réessayer.");
+            }
+          } else {
+            console.log("hi" + err)
+            setError("Impossible de contacter le serveur.");
+          }
         }
-    };
+      };
+      
 
     return (
         <>
@@ -32,8 +51,8 @@ function LoginForm({ChangeToSignUp, getConnected, users }) {
             <input
                 id='username'
                 type="text"
-                minlength="8"
-                maxlength="14"
+                minLength="8"
+                maxLength="14"
                 placeholder="Nom d'utilisateur"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -43,8 +62,8 @@ function LoginForm({ChangeToSignUp, getConnected, users }) {
                 id='password'
                 type="password"
                 placeholder="Mot de passe"
-                minlength="8"
-                maxlength="20"
+                minLength="8"
+                maxLength="20"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

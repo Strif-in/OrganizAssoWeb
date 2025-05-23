@@ -2,17 +2,35 @@ import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import WaitingPage from './WaitingPage';
+import axios from 'axios';
 import '../css/WelcomePage.css';  // Optional for styling
 
-function WelcomePage({userCur, getConnected, users }) {
+function WelcomePage({userCur, getConnected}) {
   const [contentPage, setContentPage] = useState('login');
+  const [userWating, setUserWating] = useState('');
 
-  const handleConnection= (user) => {
-    getConnected(user)
-    if(user.userStatus === 'pending'){
-      setContentPage('waiting');
+  const handleLogin = async ({ username,  role }) => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/getUser', { username });
+      
+      if (!response.data) {
+        console.error('No user data received from server');
+        return;
+      }
+  
+      const user = response.data;
+      getConnected(user);
+
+    } catch (error) {
+      console.error('Error in handleConnection:', error);
     }
-  }
+  };
+
+  const handleRegister = (username) => {
+    setUserWating(username);
+    setContentPage('waiting');
+  };
+  
   
   return (
     <>
@@ -21,21 +39,19 @@ function WelcomePage({userCur, getConnected, users }) {
           {contentPage === 'login' && (
             <LoginForm
               ChangeToSignUp = {() => setContentPage('register')}
-              getConnected={handleConnection} 
-              users={users}
+              getConnected={handleLogin} 
             />
           )}
 
           {contentPage === 'register' && (
             <RegisterForm 
               ChangeToLogin={() => setContentPage('login')}
-              onRegisterSuccess={handleConnection}
-              users={users}
+              onRegisterSuccess={handleRegister}
             />
           )}
 
           {contentPage === 'waiting' && (
-            <WaitingPage userCur = {userCur} checkUser={() => setContentPage('login')} />
+            <WaitingPage userCur = {userWating} login={() => {setContentPage('login');setUserWating('')}} />
           )}
         </div>
         

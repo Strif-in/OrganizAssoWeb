@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
+function RegisterForm({ChangeToLogin, onRegisterSuccess}) {
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
   const [username, setUsername] = useState('');
@@ -9,45 +10,39 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if passwords match
+  
+    setError('');
+  
     if (password1 !== password2) {
-      setError('Les mots de passe ne correspondent pas.');
+      setError("Les mots de passe ne correspondent pas.");
       return;
     }
+  
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/create', {
+        username,
+        password: password1,
+        email,
+        nom,
+        prenom,
+      });
 
-    // Check if username is already taken
-    const existingUser = users.find(user => user.username === username);
-    if (existingUser) {
-      setError('Ce nom d\'utilisateur existe déjà.');
-      return;
+      onRegisterSuccess(username); // continue to waiting screen
+  
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setError("Ce nom d'utilisateur existe déjà.");
+      } else if (err.response?.status === 400) {
+        setError("Tous les champs sont requis.");
+      } else {
+        setError("Erreur serveur. Réessayez plus tard.");
+        console.error(err);
+      }
     }
-
-    // Check if username is already taken
-    const existingMail = users.find(user => user.email === email);
-    if (existingMail) {
-      setError('Ce nom d\'utilisateur existe déjà.');
-      return;
-    }
-
-    // Simulate saving the user (normally, you'd POST to backend)
-    const newUser = {
-      userId: `u${users.length + 1}`,
-      nom,
-      prenom,
-      username,
-      email,
-      password: password1,
-      userStatus: 'pending'   // Waiting for admin validation
-    };
-
-    console.log('User registered:', newUser);
-
-    // Move to WaitingPage
-    onRegisterSuccess(newUser);
   };
+  
 
   return (
     <>
@@ -56,8 +51,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
       <form className="welcome-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          minlength="3"
-          maxlength="10"
+          minLength="3"
+          maxLength="10"
           placeholder="Nom"
           value={nom}
           onChange={(e) => setNom(e.target.value)}
@@ -65,8 +60,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="text"
-          minlength="3"
-          maxlength="10"
+          minLength="3"
+          maxLength="10"
           placeholder="Prénom"
           value={prenom}
           onChange={(e) => setPrenom(e.target.value)}
@@ -74,8 +69,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="text"
-          minlength="8"
-          maxlength="14"
+          minLength="8"
+          maxLength="14"
           placeholder="Nom d'utilisateur"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -83,8 +78,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="email"
-          minlength="6"
-          maxlength="20"
+          minLength="6"
+          maxLength="20"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -92,8 +87,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="password"
-          minlength="8"
-          maxlength="20"
+          minLength="8"
+          maxLength="20"
           placeholder="Mot de passe"
           value={password1}
           onChange={(e) => setPassword1(e.target.value)}
@@ -101,8 +96,8 @@ function RegisterForm({ChangeToLogin, onRegisterSuccess, users }) {
         />
         <input
           type="password"
-          minlength="8"
-          maxlength="20"
+          minLength="8"
+          maxLength="20"
           placeholder="Confirmer le mot de passe"
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
