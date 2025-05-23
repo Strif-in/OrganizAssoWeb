@@ -43,7 +43,7 @@ function MessagesPage({ users, userCur }) {
 
   return (
     <div className="messages-page">
-      <h2>Results ({filteredMessages.length})</h2>
+      <h2>Résultats ({filteredMessages.length})</h2>
       <div className="underline-black"></div>
 
       <div className="messages-list">
