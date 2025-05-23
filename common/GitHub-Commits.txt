@@ -1,0 +1,156 @@
+PS C:\Users\stefa\OneDrive\Escritorio\Projects\LU3IN017\OrganizAssoWeb> git log -s
+commit acc7e8b264c05ee68ba94e909711cc3cd2111aa2 (HEAD -> main, origin/main)
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri May 23 10:16:10 2025 +0200
+
+    idk
+
+commit 7707c4c44849696bb839b5a7385cbd8c9b452a06
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri May 23 10:01:34 2025 +0200
+
+    Full Connection Backend Frontend
+
+commit 2b4a17b9c2aa0ba95a06e69d1d302eb8473912bf
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri May 23 05:34:49 2025 +0200
+
+    Welcome Page + Partial Forum Page
+
+commit 80a72f63ebd706ee020d09d78327251cedbecf85
+Author: mSETBEL <melsetbel@gmail.com>
+Date:   Thu May 22 15:54:48 2025 +0200
+
+    back finished and tested
+
+commit b46e1b6bee6726676ee5141f4a58140af6fa3136
+Author: mSETBEL <melsetbel@gmail.com>
+Date:   Thu May 22 12:46:03 2025 +0200
+
+    userController tsted
+
+commit 16b5a225132a038aa7babfc8929569881df19ae4
+Author: mSETBEL <melsetbel@gmail.com>
+Date:   Wed May 21 15:24:43 2025 +0200
+
+    back work
+
+commit 5c2030acef9109805764b30c2c9582c060dfa353
+Author: mSETBEL <melsetbel@gmail.com>
+Date:   Wed May 21 09:49:01 2025 +0200
+
+    back début
+
+commit d95bb6c64b1c3a64ca119aa6678eb9a94e2fe5a8
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Mon May 19 17:04:10 2025 +0200
+
+    Full Work on FrontEnd
+
+commit 8736c8e89c480cc0cc94ed3a3771749a5b728c8b
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri May 9 17:33:26 2025 +0200
+
+    BackEnd Code (Not Tested nor Implemented)
+
+commit 7c97ae6194d41935268663b61eb6618cf48a7ccd
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri May 9 17:03:23 2025 +0200
+
+    Last Component of FrontEnd
+
+commit 0c70dc9d5daa66cde95a02e5d3a1c43201ce6fa9
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Mon May 5 19:18:31 2025 +0200
+
+    Correct Redo of Last Step Of Init Proj
+
+commit 7e7f147fb3c15fd30068fff90b3fe96ca4df2e8e
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Mon May 5 18:55:00 2025 +0200
+
+    Revert "initialisation backend"
+
+    This reverts commit 64d9c766a4c06d47dd26c3c4f524f34632b4092a.
+
+    .git/COMMIT_EDITMSG [unix] (18:55 05/05/2025)                                                                                     19,1 Botrecording @a  #
+
+commit 64d9c766a4c06d47dd26c3c4f524f34632b4092a
+Author: mSETBEL <melsetbel@gmail.com>
+Date:   Thu May 1 16:31:17 2025 +0200
+
+    initialisation backend
+
+commit 01780f0eff6879f18abe59f754a26ce39073dfa3
+Author: mSETBEL <melsetbel@gmail.com>
+Date:   Sat Apr 26 11:58:19 2025 +0200
+
+    organisation du userPage
+
+commit dbcbca8848264389d6123a684a4c6c119c264fd3
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri Apr 25 17:41:59 2025 +0200
+
+    Some Corrections + Filter Messages
+
+commit c6ad2f41af0221408d1b822ea28fd95d904e7a15
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Fri Apr 25 16:50:18 2025 +0200
+
+    Css Forum Remake
+
+commit 14ed2b6464c22e8d1e09bac49ebe4a929be70c89
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Thu Apr 24 17:16:51 2025 +0200
+
+    Work Full On UserPage
+
+commit 3378412c08d5cde2662b552c1bced7b2f7122215
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Wed Apr 23 22:27:45 2025 +0200
+
+Date:   Wed Apr 23 22:27:45 2025 +0200
+
+    Almost Final Design of WelcomePage
+
+commit c33740241bce4d594613379f3d186295b5db984e
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Wed Apr 23 15:51:53 2025 +0200
+
+    User Page Work + Cohesion between Files
+
+commit 7cb08f6ab9af764f9bea4c783dd4ffa90c1b4d64
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Wed Apr 23 15:08:01 2025 +0200
+
+    ReMake WelcomePages
+
+commit 930d74ef6b29e0de976983259142dee64cccd491
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Tue Apr 22 11:44:06 2025 +0200
+
+    Melissa Component UserProfile
+
+commit 331edd0c5a7adf84eaaa86533824e8318a65425c
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Tue Apr 22 11:22:13 2025 +0200
+
+    Start of ForumPage & Messages
+
+commit 4cefd6b1e6b419e97d2d3512449667ea7ea45d22
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Sat Apr 19 23:51:51 2025 +0200
+
+    Packaging + Creation of Messages
+
+commit f54300b2d9a6a3075748393a3f2096a1ec64a83c
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Sat Apr 19 17:29:31 2025 +0200
+
+    Binome's Work + Delete PreMade Docs
+
+commit cb07dd01697844e6d6c9c5251d930d2903e1e9e1
+Author: Strif-in <stefanodefina6@gmail.com>
+Date:   Sat Apr 19 16:05:39 2025 +0200
+
+    Initial commit: full project setup

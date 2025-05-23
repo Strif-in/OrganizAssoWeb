@@ -1,0 +1,263 @@
+{
+	"info": {
+		"_postman_id": "51c1bc40-4879-4d84-b09a-69cb7bef903c",
+		"name": "Project TecWeb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "45224021",
+		"_collection_link": "https://stef-17019.postman.co/workspace/stef's-Workspace~22e98e6b-44fa-4c99-861a-9ade5133faf3/collection/45224021-51c1bc40-4879-4d84-b09a-69cb7bef903c?action=share&source=collection_link&creator=45224021"
+	},
+	"item": [
+		{
+			"name": "Alice joins",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"alice\",\r\n  \"password\": \"secure123\",\r\n  \"email\": \"alice@example.com\",\r\n  \"nom\": \"Liddell\",\r\n  \"prenom\": \"Alice\"\r\n}  ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Bob joins",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"bob\",\r\n  \"password\": \"builder456\",\r\n  \"email\": \"bob@example.com\",\r\n  \"nom\": \"Builder\",\r\n  \"prenom\": \"Bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Alice approved",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"alice\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/approve"
+			},
+			"response": []
+		},
+		{
+			"name": "Bob approved",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/approve"
+			},
+			"response": []
+		},
+		{
+			"name": "Alice sends message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"forumId\": \"general\",\r\n  \"username\": \"alice\",\r\n  \"content\": \"Hi everyone, I'm Alice!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/messages/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Bob sends message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"forumId\": \"general\",\r\n  \"username\": \"bob\",\r\n  \"content\": \"Hello Alice, I'm Bob!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/messages/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Bob promoted to admin",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/promote"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/api/users/getAll"
+			},
+			"response": []
+		},
+		{
+			"name": "Bob sends second message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"forumId\": \"general\",\r\n  \"username\": \"bob\",\r\n  \"content\": \"Second message from Bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/messages/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bob",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/getUser"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/api/messages/getAll"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bob's messages",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/messages/getByUser"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Bob's second message",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"3d605aa94887ad1ff990bae91ddd620598071ecb53d721780995361530b04ecc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Demote Bob",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"bob\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/users/demote"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Alice",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"john.doe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/api/users/delete"
+			},
+			"response": []
+		}
+	]
+}

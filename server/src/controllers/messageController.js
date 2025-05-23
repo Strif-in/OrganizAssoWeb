@@ -83,7 +83,7 @@ async function deleteMessage(req, res) {
             return res.status(500).json({ message: 'Internal server error' });
         });
 }
-
+/*
 async function getMessage(req, res) {
     const { msgId } = req.body;
 
@@ -100,7 +100,7 @@ async function getMessage(req, res) {
 
     return res.status(200).json({message : message });
 }
-
+*/
 async function getMessagesByUser(req, res) {
     const { username } = req.body;
 
@@ -147,7 +147,7 @@ async function getMessagesByThread(req, res) {
 module.exports = {
     createMessage,
     deleteMessage,
-    getMessage,
+    //getMessage,
     getAllMessages,
     getMessagesByUser,
     //getMessagesByThread

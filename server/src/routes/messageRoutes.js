@@ -3,7 +3,7 @@ const express = require('express');
 const { 
     createMessage,
     deleteMessage,
-    getMessage,
+    //getMessage,
     getAllMessages,
     getMessagesByUser,
     //getMessagesByThread 
@@ -12,7 +12,7 @@ const {
 const router = express.Router();
 
 router.post('/create', createMessage);
-router.post('/getOne', getMessage);
+//router.post('/getOne', getMessage);
 router.post('/getByUser', getMessagesByUser); 
 //router.get('/threadMessages', getMessagesByThread);
 router.delete('/delete', deleteMessage);

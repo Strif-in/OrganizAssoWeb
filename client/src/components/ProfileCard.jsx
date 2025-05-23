@@ -11,7 +11,7 @@ function ProfileCard({ user, userCur, onPromote, onDemote, onDelete, onValidate,
   };
 
   return (
-    <div className="profile-card" onClick={onSelect}>
+    <div className="profile-card" onClick={onSelect} title={"select " + user.nom + " " + user.prenom}>
       <div className="profile-info">
         <div className="profile-avatar">
           <span>{user.nom?.charAt(0).toUpperCase()}{user.prenom?.charAt(0).toUpperCase()}</span>

@@ -23,6 +23,12 @@ function ProfilePage({user, userCur,onDelete}) {
     setMessages(messages.filter(msg => msg.username === user.username))
   }, []);
 
+  const getStatusLabel = () => {
+    if (!user.isMember) return 'pending';
+    if (user.isAdmin) return 'admin';
+    return 'member';
+  };
+
   const handleDelete = async (message) => {
     try {
       await axios.delete('http://localhost:8000/api/messages/delete', {
@@ -46,7 +52,7 @@ function ProfilePage({user, userCur,onDelete}) {
             <h2>{user.username}</h2>
             <p><strong>Nom :</strong> {user.nom}</p>
             <p><strong>Prenom :</strong> {user.prenom}</p>
-            <p><strong>Status :</strong> {user.userStatus}</p>
+            <p><strong>Status :</strong> {getStatusLabel()}</p>
             <p><strong>Email :</strong> {user.email}</p>
           </div>
           <div className="user-messages">
